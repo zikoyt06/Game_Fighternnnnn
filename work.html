@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Download</title>
+    <style>
+        body {
+            background-color: #ff0000; /* تعيين الخلفية إلى اللون الأحمر */
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .frame {
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .frame h1, .frame p {
+            margin: 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            animation: bounce 2s infinite, fadeIn 2s ease-in;
+            display: block;
+            width: 100%;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:disabled {
+            background-color: #6c757d;
+            animation: none;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-direction: row;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .login-btn i {
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .login-btn:hover i {
+            color: #db4437;
+        }
+
+        .social-icons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #ff4081;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .switch {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .slider {
+            position: absolute;
+            height: 26px;
+            width: 26px;
+            background-color: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode button {
+            background-color: #444;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .slider {
+            left: 32px;
+            background-color: #444;
+        }
+
+        @media (max-width: 600px) {
+            .login-btn {
+                flex-direction: column;
+                font-size: 14px;
+            }
+
+            .login-btn i {
+                font-size: 18px;
+            }
+
+            button {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="switch" id="mode-switch">
+        <div class="slider"></div>
+    </div>
+
+    <div class="social-icons">
+        <a href="https://www.instagram.com/ziko_yt_02/" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/2124194692" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="frame">
+            <h1>About This Web</h1>
+            <p>This web is for downloading this game and enjoying it.</p>
+        </div>
+
+        <div class="frame">
+            <p>To download this game, you need to sign up with Google to unlock the button.</p>
+        </div>
+
+        <button id="login-btn" class="login-btn">
+            <i class="fab fa-google"></i> Login with Google
+        </button>
+        <button id="download-btn" disabled>DOWNLOAD</button>
+    </div>
+
+    <script>
+        const switchButton = document.getElementById('mode-switch');
+        const slider = document.querySelector('.slider');
+        const loginBtn = document.getElementById('login-btn');
+        const downloadBtn = document.getElementById('download-btn');
+
+        switchButton.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        loginBtn.addEventListener('click', function() {
+            localStorage.setItem('redirectAfterLogin', window.location.href);
+            window.location.href = 'https://accounts.google.com/o/oauth2/auth?...'; // استبدل بـ OAuth URL الصحيح
+        });
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isLoggedIn = urlParams.get('loggedIn');
+            
+            if (isLoggedIn === 'true') {
+                downloadBtn.disabled = false;
+            }
+        };
+
+        downloadBtn.addEventListener('click', function() {
+            window.location.href = 'https://www.youtube.com';
+        });
+    </script>
+</body>
+</html>
